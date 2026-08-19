@@ -12,20 +12,14 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Install Node.js 22
-      run: |
-        curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
-        sudo apt-get install -y nodejs
-    
-    - name: Verify Node version
-      run: |
-        echo "Node version: $(node --version)"
-        echo "NPM version: $(npm --version)"
-        which node
-        node --version | grep -q "v22" || (echo "ERROR: Node 22 required!" && exit 1)
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+        cache: 'npm'
     
     - name: Install dependencies
-      run: npm install
+      run: npm ci
     
     - name: Build web app
       run: npm run build
@@ -42,13 +36,8 @@ jobs:
     - name: Set up Android SDK
       uses: android-actions/setup-android@v3
     
-    - name: Install Gradle and fix wrapper
-      run: |
-        sudo apt-get update -qq
-        sudo apt-get install -y gradle
-        cd android
-        gradle wrapper --gradle-version 8.14.3
-        chmod +x gradlew
+    - name: Make gradlew executable
+      run: chmod +x ./android/gradlew
 
     - name: Create keystore file from GitHub Secrets
       run: |
