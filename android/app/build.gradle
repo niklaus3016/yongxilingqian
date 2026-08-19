@@ -1,23 +1,31 @@
 apply plugin: 'com.android.application'
 
+// 删除自适应图标配置文件
+task deleteAdaptiveIconConfigs {
+    doLast {
+        def filesToDelete = [
+            'src/main/res/drawable/ic_launcher_background.xml',
+            'src/main/res/drawable-v24/ic_launcher_foreground.xml',
+            'src/main/res/mipmap-anydpi-v26/ic_launcher.xml',
+            'src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml'
+        ]
+        
+        filesToDelete.each { filePath ->
+            def fileObj = file(filePath)
+            if (fileObj.exists()) {
+                fileObj.delete()
+                println "Deleted: $filePath"
+            }
+        }
+    }
+}
+
+// 在构建前执行删除任务
+preBuild.dependsOn deleteAdaptiveIconConfigs
+
 android {
     namespace = "com.yongxilingqian.app"
     compileSdk = rootProject.ext.compileSdkVersion
-    
-    // 签名配置 - 支持本地和 CI/CD 环境
-    signingConfigs {
-        release {
-            def keystorePath = System.getenv("KEYSTORE_PATH") ?: "${System.getProperty('user.home')}/release.keystore"
-            def keystorePassword = System.getenv("KEYSTORE_PASSWORD") ?: ""
-            def keyAlias = System.getenv("KEY_ALIAS") ?: "yongxilingqian"
-            def keyPassword = System.getenv("KEY_PASSWORD") ?: keystorePassword
-            
-            storeFile file(keystorePath)
-            storePassword keystorePassword
-            keyAlias keyAlias
-            keyPassword keyPassword
-        }
-    }
     
     defaultConfig {
         applicationId "com.yongxilingqian.app"
@@ -32,11 +40,36 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    
+    // 确保使用AndroidX
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    
+    // 签名配置
+    signingConfigs {
+        release {
+            storeFile file('../my-release-key.keystore')
+            storePassword System.getenv('KEYSTORE_PASSWORD') ?: '123456'
+            keyAlias 'yongxilingqian'
+            keyPassword System.getenv('KEY_PASSWORD') ?: System.getenv('KEYSTORE_PASSWORD') ?: '123456'
+            v1SigningEnabled true
+            v2SigningEnabled true
+            storeType 'JKS'
+        }
+    }
+    
     buildTypes {
         release {
-            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
