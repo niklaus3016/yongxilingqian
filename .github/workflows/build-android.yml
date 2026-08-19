@@ -39,21 +39,16 @@ jobs:
         distribution: 'adopt'
         java-version: '21'
     
-    - name: Set up Gradle
-      uses: gradle/actions/setup-gradle@v4
-      with:
-        gradle-version: '8.14.3'
-    
     - name: Set up Android SDK
       uses: android-actions/setup-android@v3
     
-    - name: Regenerate Gradle Wrapper
+    - name: Install Gradle and fix wrapper
       run: |
+        sudo apt-get update -qq
+        sudo apt-get install -y gradle
         cd android
         gradle wrapper --gradle-version 8.14.3
-    
-    - name: Make gradlew executable
-      run: chmod +x ./android/gradlew
+        chmod +x gradlew
 
     - name: Create keystore file from GitHub Secrets
       run: |
