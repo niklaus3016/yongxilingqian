@@ -12,10 +12,17 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '22'
+    - name: Install Node.js 22
+      run: |
+        curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+        apt-get install -y nodejs
+    
+    - name: Verify Node version
+      run: |
+        echo "Node version: $(node --version)"
+        echo "NPM version: $(npm --version)"
+        which node
+        node --version | grep -q "v22" || (echo "ERROR: Node 22 required!" && exit 1)
     
     - name: Install dependencies
       run: npm install
