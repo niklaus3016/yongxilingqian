@@ -1,0 +1,16 @@
+node_modules
+dist
+build
+*.log
+.env
+.env.local
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.idea
+.vscode
+android/app/build
+android/app/capacitor.build.gradle

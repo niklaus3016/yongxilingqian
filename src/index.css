@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .writing-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    letter-spacing: 0.15em;
+  }
+
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* 全局隐藏任何原生桌面滚动条，呈现纯正移动端App体验 */
+*, *::before, *::after {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
+/* 艺术古风宣纸底蕴与精致交互体验 */
+html, body {
+  font-family: 'Noto Serif SC', 'ZCOOL XiaoWei', serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #FDF8F2;
+  color: #2A2422;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+/* 艺术古风手写体修饰 */
+.font-brush {
+  font-family: 'Ma Shan Zheng', 'Noto Serif SC', cursive, serif;
+}
+

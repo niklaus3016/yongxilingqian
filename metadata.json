@@ -1,0 +1,6 @@
+{
+  "name": "永喜灵签",
+  "description": "沉浸式纯前端古风电子求签解签应用，支持静心摇签、100支详尽灵签、每日一签、祈福寄语、木鱼静心与签文海报生成。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

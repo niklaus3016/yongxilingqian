@@ -1,0 +1,25 @@
+{
+  "name": "永喜灵签",
+  "short_name": "永喜灵签",
+  "description": "永喜灵签：纯前端离线古风电子求签、详尽解签、每日一签、祈福寄语、木鱼功德APP",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FDF8F2",
+  "theme_color": "#C94D3F",
+  "orientation": "portrait",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
